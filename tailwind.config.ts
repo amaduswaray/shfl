@@ -15,6 +15,7 @@ const config: Config = {
         "shfl-red": "#DB0001",
         "shfl-white": "#FFE8E9",
         "shfl-pink": "#FFC5C5",
+        "shfl-gray": "#4A4A4A",
       },
     },
   },

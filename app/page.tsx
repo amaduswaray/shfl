@@ -1,23 +1,36 @@
 "use client";
 import { AuthContext } from "@/context/AuthContext";
-import { useSession, signIn, signOut } from "next-auth/react";
 import LoginModal from "@/components/LoginModal";
 import { useContext } from "react";
 import Navbar from "@/components/Navbar";
+import Logo from "@images/dashboard_logo.svg";
 
 // Change to use context, and not the session from next auth
 export default function Home() {
-  const { data: session } = useSession();
   const { isAuthenticated } = useContext(AuthContext);
   return (
     <div className="w-full">
       <Navbar />
-      <div className="p-6">
-        <p className="text-shfl-white font-bold text-3xl mt-5 mb-2">SHFL</p>
-        <span className="bold-txt">{session?.user?.name}</span>
+      <div className="w-full p-4 flex flex-col justify-between items-center gap-20 max-h-svh">
+        <Logo />
+        <div className="w-full p-4 flex flex-col justify-between items-center">
+          <div className="px-6 py-2 my-2 bg-shfl-red text-shfl-white text-lg font-bold rounded-xl shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+            {" "}
+            Join Game
+          </div>
+          <div className="px-6 py-2 my-2 bg-shfl-gray text-shfl-white text-sm font-bold rounded-xl shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+            {" "}
+            New Game
+          </div>
+        </div>
+        <div className="w-full p-4 flex flex-col justify-between items-center">
+          <p className="my-2 text-shfl-white text-sm font-bold shadow-sm hover:text-shfl-red">
+            How to play
+          </p>
+        </div>
       </div>
 
-      <LoginModal show={isAuthenticated} />
+      <LoginModal show={!isAuthenticated} />
     </div>
   );
 }
