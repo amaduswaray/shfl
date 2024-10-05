@@ -39,15 +39,15 @@ model Game {
 model User {
   id            String       @default(cuid()) @id
   name          String?
-  email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  gamesPlayed   Int       @default(0)
-  shotsGiven    Int       @default(0)
-  shotsTaken    Int       @default(0)
+  email         String?   
+  createdAt     DateTime    @default(now()) @map(name: "created_at")
+  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
+  gamesPlayed   Int         @default(0)
+  shotsGiven    Int         @default(0)
+  shotsTaken    Int         @default(0)
   playlistId    String?
-  games         Game[] @relation("players")
-  hostedGames   Game[] @relation("host")
+  games         Game[]      @relation("players")
+  hostedGames   Game[]      @relation("host")
   @@map(name: "users")
 }
 
