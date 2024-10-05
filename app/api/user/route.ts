@@ -1,4 +1,6 @@
+import { prisma } from "@/lib/prisma";
+
 export async function GET(req: Request) {
-  console.log("This is the auth endpoint");
-  return Response.json({ sucess: true });
+  const user = await prisma.user.findMany();
+  return Response.json(user);
 }
