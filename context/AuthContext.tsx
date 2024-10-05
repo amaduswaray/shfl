@@ -5,6 +5,9 @@ import { DefaultSession } from "next-auth";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
+
+type Role = "player" | "host";
 
 type AuthContextData = {
   name: string;
@@ -12,6 +15,9 @@ type AuthContextData = {
   shotsGiven: number;
   gamesPlayed: number;
   shotsTaken: number;
+  isAuthenticated: boolean;
+  role: Role;
+  setRole: (role: Role) => void;
 };
 
 type AuthProviderProps = {
@@ -23,6 +29,11 @@ export const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children, session }: AuthProviderProps) {
   const [user, setUser] = useState<User>();
+  const [role, setRole] = useState<Role>("player");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const router = useRouter();
+
   useEffect(() => {
     if (!session) return;
 
@@ -30,11 +41,20 @@ export function AuthProvider({ children, session }: AuthProviderProps) {
       .post("/api/auth", session.user)
       .then((res) => {
         setUser(res.data.user);
+        setIsAuthenticated(true);
       })
       .catch((error) => {
         console.error(error);
+        signOutLocal();
       });
   }, []);
+
+  const signOutLocal = () => {
+    signOut();
+    window.localStorage.clear();
+    router.push("/");
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -43,6 +63,9 @@ export function AuthProvider({ children, session }: AuthProviderProps) {
         shotsGiven: user?.shotsGiven || 0,
         gamesPlayed: user?.gamesPlayed || 0,
         shotsTaken: user?.shotsTaken || 0,
+        isAuthenticated: isAuthenticated,
+        role: role,
+        setRole: setRole,
       }}
     >
       <SessionProvider>{children}</SessionProvider>
