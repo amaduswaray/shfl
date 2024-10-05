@@ -1,3 +1,4 @@
+import { prisma } from "@/lib/prisma";
 import NextAuth from "next-auth/next";
 import { type NextAuthOptions } from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
@@ -11,7 +12,7 @@ const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, profile }) {
       if (account) {
         token.access_token = account.access_token;
         token.refreshToken = account.refresh_token;

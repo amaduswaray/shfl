@@ -1,9 +1,11 @@
 "use client";
+import { SpotifyUser } from "@/interfaces/user";
 import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Home() {
   const { data: session } = useSession();
   console.log(session);
+  // const user: SpotifyUser | null = session?.user;
   return (
     <div>
       {session ? (

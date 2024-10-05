@@ -25,9 +25,9 @@ model User {
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
   spotifyId     String
-  gamesPlayed   Int
-  shotsGiven    Int
-  shotsTaken    Int
+  gamesPlayed   Int       @default(0)
+  shotsGiven    Int       @default(0)
+  shotsTaken    Int       @default(0)
   playlist      String?
   posts         Post[]
   @@map(name: "users")
