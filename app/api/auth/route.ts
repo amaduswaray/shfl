@@ -1,10 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { DefaultUser } from "next-auth";
-
-export async function GET(req: Request) {
-  console.log("This is the auth endpoint");
-  return Response.json({ sucess: true });
-}
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const body: DefaultUser = await req.json();
@@ -23,9 +19,17 @@ export async function POST(req: Request) {
         email: body.email!,
       },
     });
+
+    return NextResponse.json({
+      status: 200,
+      message: "ok",
+      data: { register: true, user: newUser },
+    });
   }
 
-  console.log(user);
-
-  return Response.json({ mesage: "ok", status: 200 });
+  return NextResponse.json({
+    mesage: "ok",
+    status: 200,
+    data: { register: false, user: user },
+  });
 }

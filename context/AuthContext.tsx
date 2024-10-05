@@ -1,13 +1,17 @@
 "use client";
-import { ReactNode, createContext, useEffect } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 import { SessionProvider } from "next-auth/react";
 import { DefaultSession } from "next-auth";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { User } from "@prisma/client";
 
 type AuthContextData = {
-  placeholder: string;
-  spotifyId?: string; // add a setSpotifyID
+  name: string;
+  image: string;
+  shotsGiven: number;
+  gamesPlayed: number;
+  shotsTaken: number;
 };
 
 type AuthProviderProps = {
@@ -17,28 +21,30 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextData);
 
-// TODO: Add all other auth variables needed for the context
-// useEffect for fetching data, as well as in game stats
-// Spotify is most played songs
-// In games stats are from the
-
-// If session, register user
-//    Register api checks if user exists, if not we create. if we do, we just return
 export function AuthProvider({ children, session }: AuthProviderProps) {
+  const [user, setUser] = useState<User>();
   useEffect(() => {
     if (!session) return;
 
     axios
       .post("/api/auth", session.user)
       .then((res) => {
-        console.log(res);
+        setUser(res.data.user);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
   return (
-    <AuthContext.Provider value={{ placeholder: "hello" }}>
+    <AuthContext.Provider
+      value={{
+        name: session?.user?.name!,
+        image: session?.user?.image!,
+        shotsGiven: user?.shotsGiven || 0,
+        gamesPlayed: user?.gamesPlayed || 0,
+        shotsTaken: user?.shotsTaken || 0,
+      }}
+    >
       <SessionProvider>{children}</SessionProvider>
     </AuthContext.Provider>
   );
