@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "SHFL",
   description: "A party game",
-  manifest: "/manifest.json",
   icons: {
     icon: "/icons/shuffle.png",
   },
