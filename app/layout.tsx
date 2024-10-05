@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AuthProvider } from "@/context/AuthContext";
+import { SpotifyProvider } from "@/context/SpotifyContext";
 import "@styles/globals.css";
 import { getServerSession } from "next-auth";
 
@@ -25,9 +26,11 @@ export default async function RootLayout({
         }
       >
         <AuthProvider session={session}>
-          <div className="h-full w-full bg-inherit flex flex-col justify-center items-center max-w-lg">
-            {children}
-          </div>
+          <SpotifyProvider session={session}>
+            <div className="h-full w-full bg-inherit flex flex-col justify-center items-center max-w-lg">
+              {children}
+            </div>
+          </SpotifyProvider>
         </AuthProvider>
       </body>
     </html>

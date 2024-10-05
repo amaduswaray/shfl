@@ -37,9 +37,9 @@ model Game {
 
 
 model User {
-  id            String       @default(cuid()) @id
+  id            String      @default(cuid()) @id
   name          String?
-  email         String?   
+  email         String?     @unique
   createdAt     DateTime    @default(now()) @map(name: "created_at")
   updatedAt     DateTime    @updatedAt @map(name: "updated_at")
   gamesPlayed   Int         @default(0)

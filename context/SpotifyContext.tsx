@@ -1,4 +1,4 @@
-// Context to have spotify data
+"use client";
 
 import { DefaultSession } from "next-auth";
 import { createContext, ReactNode } from "react";
