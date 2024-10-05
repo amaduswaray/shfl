@@ -1,7 +1,8 @@
 "use client";
-import { ReactNode, createContext } from "react";
-import { SessionProvider, useSession } from "next-auth/react";
-import { Session } from "next-auth";
+import { ReactNode, createContext, useEffect } from "react";
+import { SessionProvider } from "next-auth/react";
+import { DefaultSession } from "next-auth";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 
 type AuthContextData = {
@@ -11,7 +12,7 @@ type AuthContextData = {
 
 type AuthProviderProps = {
   children: ReactNode;
-  session: Session | null;
+  session: DefaultSession | null;
 };
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -24,6 +25,18 @@ export const AuthContext = createContext({} as AuthContextData);
 // If session, register user
 //    Register api checks if user exists, if not we create. if we do, we just return
 export function AuthProvider({ children, session }: AuthProviderProps) {
+  useEffect(() => {
+    if (!session) return;
+
+    axios
+      .post("/api/auth", session.user)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   return (
     <AuthContext.Provider value={{ placeholder: "hello" }}>
       <SessionProvider>{children}</SessionProvider>

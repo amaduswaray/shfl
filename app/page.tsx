@@ -6,8 +6,6 @@ import { useContext } from "react";
 // Change to use context, and not the session from next auth
 export default function Home() {
   const { data: session } = useSession();
-  const { placeholder } = useContext(AuthContext);
-  console.log(placeholder);
   return (
     <div>
       {session ? (
