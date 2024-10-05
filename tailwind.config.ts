@@ -11,6 +11,10 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "shfl-bg": "#252525",
+        "shfl-red": "#DB0001",
+        "shfl-white": "#FFE8E9",
+        "shfl-pink": "#FFC5C5",
       },
     },
   },

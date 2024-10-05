@@ -19,8 +19,16 @@ export default async function RootLayout({
   const session = await getServerSession();
   return (
     <html lang="en">
-      <body className={"antialiased"}>
-        <AuthProvider session={session}>{children}</AuthProvider>
+      <body
+        className={
+          "antialiased bg-shfl-bg flex justify-center items-center w-screen h-screen p-2 lg:p-8"
+        }
+      >
+        <AuthProvider session={session}>
+          <div className="h-full w-full bg-inherit flex flex-col justify-center items-center max-w-lg">
+            {children}
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );
