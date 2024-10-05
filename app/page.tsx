@@ -4,6 +4,7 @@ import LoginModal from "@/components/LoginModal";
 import { useContext } from "react";
 import Navbar from "@/components/Navbar";
 import Logo from "@images/dashboard_logo.svg";
+import Footer from "@/components/Footer";
 
 // Change to use context, and not the session from next auth
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
       </div>
 
       <LoginModal show={!isAuthenticated} />
+      <Footer />
     </div>
   );
 }
