@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 type AuthContextData = {
   placeholder: string;
-  spotifyId?: string;
+  spotifyId?: string; // add a setSpotifyID
 };
 
 type AuthProviderProps = {
