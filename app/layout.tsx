@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import AuthProvider from "@/context/AuthContext";
+import { AuthProvider } from "@/context/AuthContext";
 import "@styles/globals.css";
+import { getServerSession } from "next-auth";
 
 export const metadata: Metadata = {
   title: "SHFL",
@@ -10,15 +11,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession();
   return (
     <html lang="en">
       <body className={"antialiased"}>
-        <AuthProvider>{children}</AuthProvider>
+        <AuthProvider session={session}>{children}</AuthProvider>
       </body>
     </html>
   );

@@ -1,11 +1,13 @@
 "use client";
-import { SpotifyUser } from "@/interfaces/user";
+import { AuthContext } from "@/context/AuthContext";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { useContext } from "react";
 
+// Change to use context, and not the session from next auth
 export default function Home() {
   const { data: session } = useSession();
-  console.log(session);
-  // const user: SpotifyUser | null = session?.user;
+  const { placeholder } = useContext(AuthContext);
+  console.log(placeholder);
   return (
     <div>
       {session ? (
@@ -23,7 +25,7 @@ export default function Home() {
         </div>
       ) : (
         <button
-          onClick={() => signIn()}
+          onClick={() => signIn("spotify")}
           className="shadow-primary w-56 h-16 rounded-xl bg-black border-0 text-white text-3xl active:scale-[0.99] m-6"
         >
           Sign In

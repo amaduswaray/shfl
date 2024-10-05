@@ -1,8 +1,8 @@
 export interface SpotifyUser {
-  name: string | undefined | null;
-  pictrue: string | undefined | null;
-  sub: string | undefined | null; // This is the spotify id
+  name?: string;
+  pictrue?: string;
+  sub?: string;
   refreshToken: string;
-  email: string | undefined | null;
+  email?: string;
   access_token: string;
 }
