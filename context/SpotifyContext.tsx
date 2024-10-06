@@ -43,6 +43,21 @@ export function SpotifyProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     if (!session) return;
+    axios
+      .get("/api/spotify/topTracks", {
+        params: { term: term },
+        headers: { Authorization: session.token.access_token },
+      })
+      .then((res) => {
+        if (res.data.success) setTopTracks(res.data.items);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [term]);
+
+  useEffect(() => {
+    if (!session) return;
 
     axios
       .get("/api/spotify/topTracks", {
