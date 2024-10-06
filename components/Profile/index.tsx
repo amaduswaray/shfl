@@ -19,7 +19,7 @@ const Profile = () => {
         <div className="spacer"></div>
         <Cross />
       </div>
-      <div className="w-full h-5/6 flex flex-col justify-center items-center gap-2 mt-20">
+      <div className="w-full h-5/6 flex flex-col justify-center items-center gap-2 mt-16">
         <div className="w-full flex flex-col justify-center items-center gap-2">
           <Image
             src={spotifyData.image}
@@ -36,25 +36,28 @@ const Profile = () => {
         <div className="flex flex-row justify-center items-center gap-5 h-4/6 w-full p-10">
           <div className="w-1/2 h-full flex flex-col justify-start items-center gap-3">
             <h2 className="text-shfl-white font-medium text-md">Top Songs</h2>
-            <div className="bg-shfl-gray h-5/6 w-full p-3 rounded-sm flex flex-col gap-3 overflow-scroll">
-              {spotifyData.topTracks.map((track, index) => (
-                <div className="w-full flex flex-row gap-3" key={index}>
-                  <h2 className="text-shfl-pink font-medium text-md">
-                    {index + 1}
-                  </h2>
-                  <div className="flex flex-col overflow-hidden">
-                    <p className="text-shfl-white text-xs font-base truncate hover:text-clip">
-                      {track.name}
-                    </p>
-                    <p className="text-shfl-pink text-xs font-extralight">
-                      {track.artists[0].name}
-                    </p>
+            <div className="bg-shfl-gray h-full w-full p-3 rounded-sm flex flex-col gap-3">
+              <div className="sticky">Hello</div>
+              <div className="w-full h-full flex flex-col gap-3 overflow-y-scroll">
+                {spotifyData.topTracks.map((track, index) => (
+                  <div className="w-full flex flex-row gap-3" key={index}>
+                    <h2 className="text-shfl-pink font-medium text-md">
+                      {index + 1}
+                    </h2>
+                    <div className="flex flex-col overflow-hidden">
+                      <p className="text-shfl-white text-xs font-base truncate hover:text-clip">
+                        {track.name}
+                      </p>
+                      <p className="text-shfl-pink text-xs font-extralight">
+                        {track.artists[0].name}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-          <div className="flex flex-col justify-start gap-10 items-center w-1/2 h-full">
+          <div className="w-1/2 h-full flex flex-col justify-start items-center gap-10">
             <div className="flex flex-col justify-start items-center gap-3 w-full px-2">
               <h2 className="text-shfl-white font-medium text-md">
                 Times Played
