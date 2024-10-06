@@ -5,6 +5,7 @@ import { useContext } from "react";
 import Navbar from "@/components/Navbar";
 import Logo from "@images/dashboard_logo.svg";
 import Footer from "@/components/Footer";
+import Rules from "@/components/Rules";
 
 // Change to use context, and not the session from next auth
 export default function Home() {

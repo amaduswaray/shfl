@@ -1,10 +1,13 @@
 "use client";
 
-import { DefaultSession } from "next-auth";
-import { createContext, ReactNode } from "react";
+import { createContext, ReactNode, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
 type SpotifyContextData = {
   name: string;
+  spotifyId: string;
+  spotifyAccessToken: string;
   // image: string;
   // shotsGiven: number;
   // gamesPlayed: number;
@@ -14,16 +17,35 @@ type SpotifyContextData = {
 
 type AuthProviderProps = {
   children: ReactNode;
-  session: DefaultSession | null;
 };
 
 export const SpotifyContext = createContext({} as SpotifyContextData);
 
-export function SpotifyProvider({ children, session }: AuthProviderProps) {
+export function SpotifyProvider({ children }: AuthProviderProps) {
+  const { data: session } = useSession();
+
+  useEffect(() => {
+    if (!session) return;
+
+    axios
+      .get("/api/topTracks", {
+        params: { term: "short_term" },
+        headers: { Authorization: session.token.access_token },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [session]);
+  // useEffect to spotify endpoint - create a local spotify endpoint that returns all needed daat
   return (
     <SpotifyContext.Provider
       value={{
         name: "test",
+        spotifyId: session?.token.sub!,
+        spotifyAccessToken: session?.token.access_token!,
       }}
     >
       {children}

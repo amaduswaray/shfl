@@ -26,7 +26,7 @@ export default async function RootLayout({
         }
       >
         <AuthProvider session={session}>
-          <SpotifyProvider session={session}>
+          <SpotifyProvider>
             <div className="h-full w-full bg-inherit flex flex-col justify-center items-center max-w-lg">
               {children}
             </div>
