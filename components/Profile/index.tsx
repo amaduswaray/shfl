@@ -6,6 +6,7 @@ import { Term } from "@/interfaces/spotify";
 import Image from "next/image";
 import Cross from "@icons/cross.svg";
 import Dropdown from "@icons/dropdown.svg";
+import Dropup from "@icons/dropup.svg";
 
 interface Option {
   value: Term;
@@ -13,9 +14,9 @@ interface Option {
 }
 
 const options: Option[] = [
-  { value: "short_term", label: "4 weeks" },
-  { value: "medium_term", label: "1 year" },
-  { value: "long_term", label: "10 years" },
+  { value: "short_term", label: "4 Weeks" },
+  { value: "medium_term", label: "1 Year" },
+  { value: "long_term", label: "10 Years" },
 ];
 
 const Profile = () => {
@@ -58,24 +59,22 @@ const Profile = () => {
                   <button
                     type="button"
                     onClick={() => setOpen(!open)}
-                    className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                    className="relative w-full cursor-pointer rounded-sm py-1.5 text-shfl-white font-medium text-left text-md hover:bg-shfl-bg"
                     aria-haspopup="listbox"
                     aria-expanded={open}
                     aria-labelledby="listbox-label"
                   >
                     <span className="flex items-center">
-                      <span className="ml-3 block truncate">
-                        {selected.label}
-                      </span>
+                      <span className=" block truncate">{selected.label}</span>
                     </span>
                     <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                      <Dropdown />
+                      {open ? <Dropup /> : <Dropdown />}
                     </span>
                   </button>
 
                   {open && (
                     <ul
-                      className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                      className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-shfl-bg py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
                       tabIndex={-1}
                       role="listbox"
                       aria-labelledby="listbox-label"
@@ -83,8 +82,8 @@ const Profile = () => {
                       {options.map((option) => (
                         <li
                           key={option.value}
-                          className={`relative cursor-pointer select-none py-2 pl-3 pr-9 text-gray-900 
-                ${selected.value === option.value ? "bg-indigo-600 text-white" : ""}
+                          className={`relative cursor-pointer select-none py-2 pl-3 pr-9 text-shfl-white 
+                ${selected.value === option.value ? "bg-shfl-red text-shfl-pink" : ""}
               `}
                           id={`listbox-option-${option.value}`}
                           role="option"
