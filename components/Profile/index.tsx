@@ -24,7 +24,7 @@ const Profile = () => {
             src={spotifyData.image}
             height={130}
             width={130}
-            alt="Profile picture"
+            alt="Profile-picture"
             className="rounded-full aspect-square object-cover"
           />
           <p className="text-shfl-white font-semibold text-lg">

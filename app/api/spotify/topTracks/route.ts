@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import axios from "axios";
+import { NextResponse } from "next/server";
 
 type Term = "short_term" | "medium_term" | "long_term" | null;
 
@@ -17,15 +18,19 @@ export async function GET(req: Request) {
       },
     );
 
-    // console.log(response.data.items);
-    // Return success here, with all the needed data
+    console.log(response.data.items);
+    return NextResponse.json({ sucess: true, items: response.data.items });
   } catch (error) {
     console.error(error);
 
-    return Response.json({ sucess: false });
-  }
+    //TODO: Handle if unauthorized due to access token expiring
 
-  return Response.json({ sucess: true });
+    return NextResponse.json({
+      sucess: false,
+      status: 500,
+      message: "A spotify error occured",
+    });
+  }
 }
 
 /* const fetchTopTracks = async (token, term) => {

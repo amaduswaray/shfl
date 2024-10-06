@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import axios from "axios";
+import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
   const headerList = headers();
@@ -11,11 +12,18 @@ export async function GET(req: Request) {
     });
 
     // console.log(response.data);
-    return Response.json({ sucess: true, image: response.data.images[1].url });
+    return NextResponse.json({
+      sucess: true,
+      image: response.data.images[1].url,
+    });
     // Return success here, with all the needed data
   } catch (error) {
     console.error(error);
 
-    return Response.json({ sucess: false });
+    return NextResponse.json({
+      sucess: false,
+      status: 500,
+      message: "A spotify error occured",
+    });
   }
 }
