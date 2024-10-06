@@ -9,14 +9,21 @@ export async function GET(req: Request) {
   const accessToken = headerList.get("Authorization");
   const term: Term = searchParams.get("term") as Term;
 
-  const response = await axios.get(
-    `https://api.spotify.com/v1/me/top/tracks?time_range=${term}`,
-    {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    },
-  );
+  try {
+    const response = await axios.get(
+      `https://api.spotify.com/v1/me/top/tracks?time_range=${term}&limit=15`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      },
+    );
 
-  console.log(response);
+    // console.log(response.data.items);
+    // Return success here, with all the needed data
+  } catch (error) {
+    console.error(error);
+
+    return Response.json({ sucess: false });
+  }
 
   return Response.json({ sucess: true });
 }

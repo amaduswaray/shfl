@@ -30,7 +30,7 @@ export const AuthContext = createContext({} as AuthContextData);
 export function AuthProvider({ children, session }: AuthProviderProps) {
   const [user, setUser] = useState<User>();
   const [role, setRole] = useState<Role>("player");
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const router = useRouter();
 
