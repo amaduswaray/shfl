@@ -6,6 +6,8 @@ export interface Artist {
 
 type AlbumType = "album" | "single" | "compilation";
 
+export type Term = "short_term" | "medium_term" | "long_term";
+
 export interface Album {
   album_type: AlbumType;
   total_tracks: number;
