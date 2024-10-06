@@ -18,8 +18,8 @@ export async function GET(req: Request) {
       },
     );
 
-    console.log(response.data.items);
-    return NextResponse.json({ sucess: true, items: response.data.items });
+    // console.log(response.data.items);
+    return NextResponse.json({ success: true, items: response.data.items });
   } catch (error) {
     console.error(error);
 
