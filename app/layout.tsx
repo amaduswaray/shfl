@@ -29,9 +29,9 @@ export default async function RootLayout({
       >
         <AuthProvider session={session}>
           <SpotifyProvider>
-            <div className="h-full w-full bg-inherit flex flex-col justify-center items-center max-w-lg">
+            <div className="h-full w-full bg-inherit flex flex-col justify-between items-center max-w-lg">
               <Navbar />
-              {children}
+              <div>{children}</div>
               <Footer />
             </div>
           </SpotifyProvider>

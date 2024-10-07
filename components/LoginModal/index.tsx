@@ -8,7 +8,7 @@ const LoginModal = ({ show }: LoginProps) => {
   return (
     show && (
       <div className="fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
-        <div className="p-8 border border-shfl-bg w-full mx-5 shadow-lg rounded-xl bg-shfl-bg">
+        <div className="p-8 border border-shfl-bg w-full max-w-lg mx-5 shadow-lg rounded-xl bg-shfl-bg">
           <div className="text-center">
             <div className="flex justify-center">
               <div
