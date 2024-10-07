@@ -4,6 +4,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { SpotifyProvider } from "@/context/SpotifyContext";
 import { getServerSession } from "next-auth";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "SHFL",
@@ -28,9 +29,10 @@ export default async function RootLayout({
       >
         <AuthProvider session={session}>
           <SpotifyProvider>
-            <Navbar />
             <div className="h-full w-full bg-inherit flex flex-col justify-center items-center max-w-lg">
+              <Navbar />
               {children}
+              <Footer />
             </div>
           </SpotifyProvider>
         </AuthProvider>

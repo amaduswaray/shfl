@@ -7,11 +7,10 @@ import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     pathname === "/" && (
-      <div className="flex flex-row justify-between items-center w-full max-w-lg h-20 top-0 fixed nav px-10">
+      <div className="flex flex-row justify-between items-center w-full max-w-lg h-20 top-0 nav px-6">
         <Logout onClick={() => signOut()} />
         <Avatar />
       </div>
