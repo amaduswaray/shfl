@@ -16,6 +16,8 @@ type AuthContextData = {
   gamesPlayed: number;
   shotsTaken: number;
   isAuthenticated: boolean;
+  showProfile: boolean;
+  setShowProfile: (param: boolean) => void;
   role: Role;
   setRole: (role: Role) => void;
 };
@@ -31,6 +33,7 @@ export function AuthProvider({ children, session }: AuthProviderProps) {
   const [user, setUser] = useState<User>();
   const [role, setRole] = useState<Role>("player");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [showProfile, setShowProfile] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -66,6 +69,8 @@ export function AuthProvider({ children, session }: AuthProviderProps) {
         isAuthenticated: isAuthenticated,
         role: role,
         setRole: setRole,
+        showProfile: showProfile,
+        setShowProfile: setShowProfile,
       }}
     >
       <SessionProvider>{children}</SessionProvider>

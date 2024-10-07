@@ -1,7 +1,6 @@
 "use client";
 import { AuthContext } from "@/context/AuthContext";
-// import LoginModal from "@/components/LoginModal";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Logo from "@images/dashboard_logo.svg";
 import Seperation from "@icons/seperation.svg";
 import dynamic from "next/dynamic";
@@ -14,9 +13,14 @@ const Download = dynamic(() => import("@components/Download"), {
 const Rules = dynamic(() => import("@components/Rules"), {
   ssr: false,
 });
+const Profile = dynamic(() => import("@components/Profile"), {
+  ssr: false,
+});
 
 // Change to use context, and not the session from next auth
 export default function Home() {
+  const [showRules, setShowRules] = useState<boolean>(false);
+  const [showDownload, setShowDownload] = useState<boolean>(false);
   const { isAuthenticated } = useContext(AuthContext);
   return (
     <div className="w-full">
@@ -33,16 +37,24 @@ export default function Home() {
           </div>
         </div>
         <div className="w-full p-4 flex flex-row gap-5 justify-between items-center">
-          <p className="my-2 text-shfl-white text-sm font-bold shadow-sm hover:text-shfl-red">
+          <a
+            onClick={() => setShowRules(!showRules)}
+            className="my-2 text-shfl-white text-sm font-bold shadow-sm hover:text-shfl-red cursor-pointer"
+          >
             How to play
-          </p>
+          </a>
           <Seperation />
-          <p className="my-2 text-shfl-white text-sm font-bold shadow-sm hover:text-shfl-red">
+          <a
+            onClick={() => setShowDownload(!showDownload)}
+            className="my-2 text-shfl-white text-sm font-bold shadow-sm hover:text-shfl-red cursor-pointer"
+          >
             Download
-          </p>
+          </a>
         </div>
       </div>
-      <Rules />
+      <Rules show={showRules} setShow={setShowRules} />
+      <Download show={showDownload} setShow={setShowDownload} />
+      <Profile />
 
       <LoginModal show={!isAuthenticated} />
     </div>
