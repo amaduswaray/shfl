@@ -5,11 +5,13 @@ import { useContext } from "react";
 import Logo from "@images/dashboard_logo.svg";
 import Seperation from "@icons/seperation.svg";
 import dynamic from "next/dynamic";
-import Rules from "@/components/Rules";
 const LoginModal = dynamic(() => import("@components/LoginModal"), {
   ssr: false,
 });
 const Download = dynamic(() => import("@components/Download"), {
+  ssr: false,
+});
+const Rules = dynamic(() => import("@components/Rules"), {
   ssr: false,
 });
 
@@ -40,7 +42,7 @@ export default function Home() {
           </p>
         </div>
       </div>
-      <Download />
+      <Rules />
 
       <LoginModal show={!isAuthenticated} />
     </div>
