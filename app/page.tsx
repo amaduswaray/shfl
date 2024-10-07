@@ -1,11 +1,14 @@
 "use client";
 import { AuthContext } from "@/context/AuthContext";
-import LoginModal from "@/components/LoginModal";
+// import LoginModal from "@/components/LoginModal";
 import { useContext } from "react";
-import Navbar from "@/components/Navbar";
 import Logo from "@images/dashboard_logo.svg";
-import Footer from "@/components/Footer";
+import Seperation from "@icons/seperation.svg";
+import dynamic from "next/dynamic";
 import Rules from "@/components/Rules";
+const LoginModal = dynamic(() => import("@components/LoginModal"), {
+  ssr: false,
+});
 
 // Change to use context, and not the session from next auth
 export default function Home() {
@@ -24,9 +27,13 @@ export default function Home() {
             New Game
           </div>
         </div>
-        <div className="w-full p-4 flex flex-col justify-between items-center">
+        <div className="w-full p-4 flex flex-row gap-5 justify-between items-center">
           <p className="my-2 text-shfl-white text-sm font-bold shadow-sm hover:text-shfl-red">
             How to play
+          </p>
+          <Seperation />
+          <p className="my-2 text-shfl-white text-sm font-bold shadow-sm hover:text-shfl-red">
+            Download
           </p>
         </div>
       </div>
