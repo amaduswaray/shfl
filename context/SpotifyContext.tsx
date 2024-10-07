@@ -43,10 +43,17 @@ export function SpotifyProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     if (!session) return;
+    setAccessToken(session.token.access_token);
+    setRefreshToken(session.token.refreshToken);
+    setExpiresIn(session.token.accessTokenExpires);
+  }, [session]);
+
+  useEffect(() => {
+    if (!accessToken) return;
     axios
       .get("/api/spotify/topTracks", {
         params: { term: term },
-        headers: { Authorization: session.token.access_token },
+        headers: { Authorization: accessToken },
       })
       .then((res) => {
         if (res.data.success) setTopTracks(res.data.items);
@@ -54,15 +61,15 @@ export function SpotifyProvider({ children }: AuthProviderProps) {
       .catch((error) => {
         console.error(error);
       });
-  }, [term]);
+  }, [term, accessToken]);
 
   useEffect(() => {
-    if (!session) return;
+    if (!accessToken) return;
 
     axios
       .get("/api/spotify/topTracks", {
         params: { term: term },
-        headers: { Authorization: session.token.access_token },
+        headers: { Authorization: accessToken },
       })
       .then((res) => {
         if (res.data.success) setTopTracks(res.data.items);
@@ -73,7 +80,7 @@ export function SpotifyProvider({ children }: AuthProviderProps) {
 
     axios
       .get("/api/spotify/profile", {
-        headers: { Authorization: session.token.access_token },
+        headers: { Authorization: accessToken },
       })
       .then((res) => {
         setQualityImage(res.data.image);
@@ -81,21 +88,22 @@ export function SpotifyProvider({ children }: AuthProviderProps) {
       .catch((error) => {
         console.error(error);
       });
-  }, [session]);
+  }, [accessToken]);
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (!refreshToken || !expiresIn) return;
     const interval = setInterval(
       () => {
         axios
-          .post("https://shfl-b6010.ew.r.appspot.com/refresh", {
-            refreshToken,
+          .get("/api/spotify/refresh", {
+            headers: { Authorization: refreshToken },
           })
           .then((res) => {
             setAccessToken(res.data.accessToken);
             setExpiresIn(res.data.expiresIn);
           })
-          .catch(() => {
+          .catch((error) => {
+            console.error(error);
             router.push("/");
           });
       },
@@ -103,7 +111,7 @@ export function SpotifyProvider({ children }: AuthProviderProps) {
     );
 
     return () => clearInterval(interval);
-  }, [refreshToken, expiresIn]); */
+  }, [refreshToken, expiresIn]);
 
   return (
     <SpotifyContext.Provider
