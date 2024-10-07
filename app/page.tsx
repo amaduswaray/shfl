@@ -12,7 +12,6 @@ export default function Home() {
   const { isAuthenticated } = useContext(AuthContext);
   return (
     <div className="w-full">
-      <Navbar />
       <div className="w-full p-4 flex flex-col justify-between items-center gap-20 max-h-svh">
         <Logo />
         <div className="w-full p-4 flex flex-col justify-between items-center">
@@ -33,7 +32,6 @@ export default function Home() {
       </div>
 
       <LoginModal show={!isAuthenticated} />
-      <Footer />
     </div>
   );
 }

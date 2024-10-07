@@ -21,7 +21,7 @@ const options: Option[] = [
 
 const Profile = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<Option>(options[1]);
+  const [selected, setSelected] = useState<Option>(options[0]);
   const spotifyData = useContext(SpotifyContext);
   const profileData = useContext(AuthContext);
 
