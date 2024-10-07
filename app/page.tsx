@@ -9,6 +9,9 @@ import Rules from "@/components/Rules";
 const LoginModal = dynamic(() => import("@components/LoginModal"), {
   ssr: false,
 });
+const Download = dynamic(() => import("@components/Download"), {
+  ssr: false,
+});
 
 // Change to use context, and not the session from next auth
 export default function Home() {
@@ -37,6 +40,7 @@ export default function Home() {
           </p>
         </div>
       </div>
+      <Download />
 
       <LoginModal show={!isAuthenticated} />
     </div>
