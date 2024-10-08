@@ -19,14 +19,32 @@ const options: Option[] = [
   { value: "long_term", label: "10 Years" },
 ];
 
+const maxSongs: number[] = Array.from({ length: 3 }, (_, index) => index + 1);
+
 const HostGame = ({ show, setShow }: ModalProps) => {
   const [open, setOpen] = useState<boolean>(false);
+  const [songOpen, setSongOpen] = useState<boolean>(false);
+  const [songAmount, setSongAmount] = useState<number>(2);
   const [selected, setSelected] = useState<Option>(options[0]);
   const [positions, setPositions] = useState<number[]>([1, 2]);
+  console.log(songAmount);
+  console.log(positions);
 
   const handleTerm = (option: Option) => {
     setSelected(option);
     setOpen(false);
+  };
+
+  const handleSongAmount = (value: number) => {
+    if (value) {
+      setSongAmount(value);
+      const newPositions = Array.from(
+        { length: value },
+        (_, index) => index + 1,
+      );
+      setPositions(newPositions);
+      setSongOpen(false);
+    }
   };
 
   const submit = () => {
@@ -61,8 +79,8 @@ const HostGame = ({ show, setShow }: ModalProps) => {
                   className="bg-shfl-gray placeholder-shfl-pink border border-gray-800 text-shfl-red text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full p-2.5"
                 />
               </div>
-              <div className="flex flex-row justify-between items-center gap-10">
-                <div>
+              <div className="flex flex-row justify-between items-center">
+                <div className="w-2/5">
                   <p className="p-2.5 text-md md:text-lg font-bold text-shfl-white">
                     Song period
                   </p>
@@ -115,29 +133,71 @@ const HostGame = ({ show, setShow }: ModalProps) => {
                     )}
                   </div>
                 </div>
-                <div>
+                <div className="w-2/5">
                   <p className="p-2.5 text-md md:text-sm font-bold text-shfl-white">
                     Songs / Person
                   </p>
-                  <input
-                    placeholder="2 (default)"
-                    defaultValue={2}
-                    //value={}
-                    maxLength={1}
-                    type="number"
-                    min={1}
-                    max={3}
-                    className="bg-shfl-gray placeholder-shfl-bg border border-gray-800 text-shfl-pink text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full text-center p-2.5"
-                  />
+                  <div className="relative w-full">
+                    <button
+                      type="button"
+                      onClick={() => setSongOpen(!songOpen)}
+                      className="bg-shfl-gray placeholder-shfl-pink border border-gray-800 text-shfl-pink text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full p-2.5 hover:bg-gray-600"
+                      aria-haspopup="listbox"
+                      aria-expanded={songOpen}
+                      aria-labelledby="listbox-label"
+                    >
+                      <span className="flex items-center justify-center">
+                        <span className=" block truncate">{songAmount}</span>
+                      </span>
+                    </button>
+
+                    {songOpen && (
+                      <ul
+                        className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-shfl-gray py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                        tabIndex={-1}
+                        role="listbox"
+                        aria-labelledby="listbox-label"
+                      >
+                        {maxSongs.map((value, index) => (
+                          <li
+                            key={index}
+                            className={`relative cursor-pointer select-none py-2 pl-3 pr-9 text-shfl-white hover:bg-gray-600 
+                ${songAmount === value ? "bg-shfl-red text-shfl-pink" : ""}
+              `}
+                            id={`listbox-option-${index}`}
+                            role="option"
+                            onClick={() => handleSongAmount(value)}
+                          >
+                            <div className="flex items-center justify-center">
+                              <span
+                                className={`ml-3 block truncate ${songAmount === value ? "font-medium" : "font-normal"}`}
+                              >
+                                {value}
+                              </span>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
             <div className="flex flex-col w-full">
               <p className="p-2.5 text-md md:text-sm font-bold text-shfl-white">
-                Songs / Person
+                Top Song Selection
               </p>
               <div className="flex-row flex justify-between items-center w-full p-2.5">
-                Song indexes selectors
+                <input
+                  placeholder="2 (default)"
+                  defaultValue={2}
+                  //value={}
+                  maxLength={2}
+                  type="number"
+                  min={1}
+                  max={15}
+                  className="bg-shfl-gray placeholder-shfl-bg border border-gray-800 text-shfl-pink text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full text-center p-2.5"
+                />
               </div>
             </div>
             <div className="w-full flex items-center justify-center mb-16">
