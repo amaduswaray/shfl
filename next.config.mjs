@@ -26,6 +26,11 @@ export default withPWA({
         hostname: "scontent-lhr8-1.xx.fbcdn.net",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "scontent-bru2-1.xx.fbcdn.net",
+        pathname: "**",
+      },
       /* {
         protocol: "https",
         hostname: "nabostylisten.s3.amazonaws.com",
@@ -40,3 +45,4 @@ export default withPWA({
 });
 
 // export default nextConfig;
+//
