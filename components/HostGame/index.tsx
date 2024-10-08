@@ -12,7 +12,10 @@ const HostGame = ({ show, setShow }: ModalProps) => {
         <div className="p-8 w-full max-w-lg h-full bg-inherit">
           <div className="flex flex-row justify-between items-center px-10 top-0 sticky">
             <div className="w-5"></div>
-            <h3 className="text-3xl font-bold text-shfl-red">SHFL.</h3>
+            <h3 className="text-3xl font-bold">
+              <span className="text-shfl-white">Create</span>{" "}
+              <span className="text-shfl-red">SHFL</span>
+            </h3>
             <a
               onClick={() => setShow(false)}
               className="hover:bg-shfl-gray cursor-pointer p-1 rounded-md"
@@ -20,117 +23,44 @@ const HostGame = ({ show, setShow }: ModalProps) => {
               <Cross />
             </a>
           </div>
-          <div className="flex flex-col gap-2 justify-between items-center p-5 h-5/6 overflow-y-scroll mt-5">
-            <p className="text-shfl-white font-semibold text-lg">
-              Welcome to <span className="text-shfl-red">SHFL</span>, the
-              ultimate music-themed party game that combines music, guessing,
-              and loads of fun! With your Spotify account at the ready, gather
-              your friends, grab your drinks, and let's get the party started!
-            </p>
-
-            <h1 className="text-center font-bold text-shfl-red text-3xl my-5">
-              How to play
-            </h1>
-
-            <div className="w-full flex flex-col my-5">
-              <h2 className="text-shfl-pink text-xl font-bold my-2">
-                Step 1: Set the stage
-              </h2>
-              <p className="text-shfl-white font-semibold text-lg">
-                The host selects the rules for the game:
-              </p>
-              <ul className="list-disc ml-6">
-                <li className="text-shfl-white font-semibold text-lg">
-                  Decide whether the playlist will consist of each player's top
-                  songs from the last four weeks, the last year, or all-time.
-                </li>
-                <li className="text-shfl-white font-semibold text-lg">
-                  Determine how many songs each player will contribute to the
-                  playlist.
-                </li>
-              </ul>
+          <div className="flex flex-col gap-5 justify-between items-center p-5 h-5/6 overflow-y-scroll mt-5">
+            <div className="w-full h-fit py-5 flex flex-col gap-5">
+              <div>
+                <p className="p-2.5 text-md md:text-lg font-bold text-shfl-white">
+                  Title
+                </p>
+                <input
+                  placeholder="Enter Title"
+                  className="bg-shfl-gray placeholder-shfl-pink border border-gray-800 text-shfl-red text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full p-2.5"
+                />
+              </div>
+              <div className="flex flex-row justify-between items-center gap-10">
+                <div>
+                  <p className="p-2.5 text-md md:text-lg font-bold text-shfl-white">
+                    Song period
+                  </p>
+                  <input
+                    placeholder="Enter Title"
+                    className="bg-shfl-gray placeholder-shfl-pink border border-gray-800 text-shfl-red text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full p-2.5"
+                  />
+                </div>
+                <div>
+                  <p className="p-2.5 text-md md:text-sm font-bold text-shfl-white">
+                    Songs / Person
+                  </p>
+                  <input
+                    placeholder="Enter Title"
+                    className="bg-shfl-gray placeholder-shfl-pink border border-gray-800 text-shfl-red text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full p-2.5"
+                  />
+                </div>
+              </div>
             </div>
-
-            <div className="w-full flex flex-col my-5">
-              <h2 className="text-shfl-pink text-xl font-bold my-2">
-                Step 2: Rally the troops
-              </h2>
-              <ul className="list-disc ml-6">
-                <li className="text-shfl-white font-semibold text-lg">
-                  The host shares a unique game code with all the players.
-                </li>
-                <li className="text-shfl-white font-semibold text-lg">
-                  Players use the code to join the game and connect their
-                  Spotify accounts.
-                </li>
-              </ul>
+            <div className="w-full flex items-center justify-center mb-16">
+              <div className="px-6 py-2 my-2 bg-shfl-red text-shfl-white text-lg font-bold rounded-xl shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                {" "}
+                Complete
+              </div>
             </div>
-
-            <div className="w-full flex flex-col my-5">
-              <h2 className="text-shfl-pink text-xl font-bold my-2">
-                Step 3: Crank up the Volume
-              </h2>
-              <p className="text-shfl-white font-semibold text-lg">
-                Now, it's time to let the music take center stage. Hit that play
-                button, and the <span className="text-shfl-red">SHFL</span>{" "}
-                playlist bursts into action. Feel the rhythm, nod your head, and
-                let the songs weave their magic. Get ready to showcase your
-                musical prowess!
-              </p>
-            </div>
-
-            <div className="w-full flex flex-col my-5">
-              <h2 className="text-shfl-pink text-xl font-bold my-2">
-                Step 4: Unleash Your Inner Detective
-              </h2>
-              <p className="text-shfl-white font-semibold text-lg">
-                The guessing fun begins! Your screen reveals the names of all
-                the players (excluding yourself). Put on your detective hat and
-                take an educated guess.
-              </p>
-            </div>
-
-            <div className="w-full flex flex-col my-5">
-              <h2 className="text-shfl-pink text-xl font-bold my-2">
-                Step 5: Unveil the Melodic Revelations
-              </h2>
-              <ul className="list-disc ml-6">
-                <li className="text-shfl-white font-semibold text-lg">
-                  Vote for the person who had the song, even while the song is
-                  still playing.
-                </li>
-                <li className="text-shfl-white font-semibold text-lg">
-                  Guess correctly to assign three sips to other players.
-                </li>
-                <li className="text-shfl-white font-semibold text-lg">
-                  The person who had the song drinks as a penalty.
-                </li>
-                <li className="text-shfl-white font-semibold text-lg">
-                  If no one guesses correctly, the song owner serves five sips.
-                </li>
-                <li className="text-shfl-white font-semibold text-lg">
-                  If everyone guesses correctly, the song owner chugs their
-                  drink.
-                </li>
-              </ul>
-            </div>
-
-            <div className="w-full flex flex-col my-5">
-              <h2 className="text-shfl-pink text-xl font-bold my-2">
-                Step 6: Keep the Party Rolling
-              </h2>
-              <p className="text-shfl-white font-semibold text-lg">
-                Keep voting, sipping, and guessing with each new song. Let the
-                music and fun continue!
-              </p>
-            </div>
-
-            <p className="text-shfl-white font-extrabold text-lg mt-5">
-              Remember to drink responsibly, enjoy the beats, and make
-              unforgettable memories. SHFL is the game that brings friends
-              together, music to life, and non-stop entertainment to any party.
-              Get ready to dance, guess, and sip in style!
-            </p>
           </div>
         </div>
       </div>
@@ -139,3 +69,18 @@ const HostGame = ({ show, setShow }: ModalProps) => {
 };
 
 export default HostGame;
+
+/* <input
+              type="tel"
+              id="phone-input"
+              aria-describedby="helper-text-explanation"
+              className="bg-white border border-gray-800 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-600 block w-full ps-10 p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="+47 123 45 678"
+              pattern="[0-9\-\+\(\)\s]+"
+              minLength={10}
+              maxLength={16}
+              value={phoneNumber}
+              onChange={handlePhoneNumber}
+              required
+            />
+*/
