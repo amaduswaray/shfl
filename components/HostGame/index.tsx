@@ -1,11 +1,33 @@
+import { Term } from "@/interfaces/spotify";
 import Cross from "@icons/cross.svg";
+import Dropdown from "@icons/dropdown.svg";
+import Dropup from "@icons/dropup.svg";
+import { useState } from "react";
 
 interface ModalProps {
   show: boolean;
   setShow: (param: boolean) => void;
 }
 
+interface Option {
+  value: Term;
+  label: string;
+}
+const options: Option[] = [
+  { value: "short_term", label: "4 Weeks" },
+  { value: "medium_term", label: "1 Year" },
+  { value: "long_term", label: "10 Years" },
+];
+
 const HostGame = ({ show, setShow }: ModalProps) => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [selected, setSelected] = useState<Option>(options[0]);
+
+  const handleTerm = (option: Option) => {
+    setSelected(option);
+    setOpen(false);
+  };
+
   return (
     show && (
       <div className="fixed inset-0 bg-shfl-bg bg-opacity-100 overflow-y-auto h-full w-full flex items-center justify-center p-5">
@@ -39,21 +61,74 @@ const HostGame = ({ show, setShow }: ModalProps) => {
                   <p className="p-2.5 text-md md:text-lg font-bold text-shfl-white">
                     Song period
                   </p>
-                  <input
-                    placeholder="Enter Title"
-                    className="bg-shfl-gray placeholder-shfl-pink border border-gray-800 text-shfl-red text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full p-2.5"
-                  />
+                  <div className="relative w-full">
+                    <button
+                      type="button"
+                      onClick={() => setOpen(!open)}
+                      className="bg-shfl-gray placeholder-shfl-pink border border-gray-800 text-shfl-pink text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full p-2.5 hover:bg-gray-600"
+                      aria-haspopup="listbox"
+                      aria-expanded={open}
+                      aria-labelledby="listbox-label"
+                    >
+                      <span className="flex items-center">
+                        <span className=" block truncate">
+                          {selected.label}
+                        </span>
+                      </span>
+                      <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                        {open ? <Dropup /> : <Dropdown />}
+                      </span>
+                    </button>
+
+                    {open && (
+                      <ul
+                        className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-shfl-bg py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                        tabIndex={-1}
+                        role="listbox"
+                        aria-labelledby="listbox-label"
+                      >
+                        {options.map((option) => (
+                          <li
+                            key={option.value}
+                            className={`relative cursor-pointer select-none py-2 pl-3 pr-9 text-shfl-white 
+                ${selected.value === option.value ? "bg-shfl-red text-shfl-pink" : ""}
+              `}
+                            id={`listbox-option-${option.value}`}
+                            role="option"
+                            onClick={() => handleTerm(option)}
+                          >
+                            <div className="flex items-center">
+                              <span
+                                className={`ml-3 block truncate ${selected.value === option.value ? "font-medium" : "font-normal"}`}
+                              >
+                                {option.label}
+                              </span>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <p className="p-2.5 text-md md:text-sm font-bold text-shfl-white">
                     Songs / Person
                   </p>
                   <input
-                    placeholder="Enter Title"
-                    className="bg-shfl-gray placeholder-shfl-pink border border-gray-800 text-shfl-red text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full p-2.5"
+                    placeholder="2"
+                    defaultValue={2}
+                    //value={}
+
+                    type="number"
+                    min={1}
+                    max={3}
+                    className="bg-shfl-gray placeholder-shfl-pink border border-gray-800 text-shfl-red text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full text-center p-2.5"
                   />
                 </div>
               </div>
+            </div>
+            <div>
+              <div>Song indexes</div>
             </div>
             <div className="w-full flex items-center justify-center mb-16">
               <div className="px-6 py-2 my-2 bg-shfl-red text-shfl-white text-lg font-bold rounded-xl shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
@@ -69,18 +144,3 @@ const HostGame = ({ show, setShow }: ModalProps) => {
 };
 
 export default HostGame;
-
-/* <input
-              type="tel"
-              id="phone-input"
-              aria-describedby="helper-text-explanation"
-              className="bg-white border border-gray-800 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-600 block w-full ps-10 p-2.5 dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="+47 123 45 678"
-              pattern="[0-9\-\+\(\)\s]+"
-              minLength={10}
-              maxLength={16}
-              value={phoneNumber}
-              onChange={handlePhoneNumber}
-              required
-            />
-*/
