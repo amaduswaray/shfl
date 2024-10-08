@@ -1,5 +1,3 @@
-import { on } from "events";
-
 export interface Artist {
   name: string;
 }

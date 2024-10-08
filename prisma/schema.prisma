@@ -15,6 +15,7 @@ enum Status {
     END
 }
 
+// TODO: Update to spotify values
 enum Period {
     NEW
     MID
