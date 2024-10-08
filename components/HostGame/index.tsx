@@ -22,10 +22,15 @@ const options: Option[] = [
 const HostGame = ({ show, setShow }: ModalProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<Option>(options[0]);
+  const [positions, setPositions] = useState<number[]>([1, 2]);
 
   const handleTerm = (option: Option) => {
     setSelected(option);
     setOpen(false);
+  };
+
+  const submit = () => {
+    console.log("submit");
   };
 
   return (
@@ -75,7 +80,7 @@ const HostGame = ({ show, setShow }: ModalProps) => {
                           {selected.label}
                         </span>
                       </span>
-                      <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2 md:block hidden">
+                      <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 items-center pr-2 hidden sm395:flex">
                         {open ? <Dropup /> : <Dropdown />}
                       </span>
                     </button>

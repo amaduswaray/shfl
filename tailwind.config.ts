@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        sm395: "395px",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
