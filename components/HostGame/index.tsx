@@ -27,7 +27,6 @@ const HostGame = ({ show, setShow }: ModalProps) => {
   const [songAmount, setSongAmount] = useState<number>(2);
   const [selected, setSelected] = useState<Option>(options[0]);
   const [positions, setPositions] = useState<number[]>([1, 2]);
-  console.log(songAmount);
   console.log(positions);
 
   const handleTerm = (option: Option) => {
@@ -45,6 +44,29 @@ const HostGame = ({ show, setShow }: ModalProps) => {
       setPositions(newPositions);
       setSongOpen(false);
     }
+  };
+
+  const handlePositions = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    index: number,
+  ) => {
+    if (parseInt(e.target.value) > 15) {
+      const newPositions = [...positions];
+      newPositions[index] = 15;
+      setPositions(newPositions);
+      return;
+    }
+    if (isNaN(parseInt(e.target.value))) {
+      const newPositions = [...positions];
+      newPositions[index] = 0;
+      setPositions(newPositions);
+      return;
+    }
+    const newPositions = [...positions];
+    const numericValue = parseInt(e.target.value, 10);
+    const newValue = Math.min(15, Math.max(1, numericValue));
+    newPositions[index] = newValue;
+    setPositions(newPositions);
   };
 
   const submit = () => {
@@ -187,17 +209,21 @@ const HostGame = ({ show, setShow }: ModalProps) => {
               <p className="p-2.5 text-md md:text-sm font-bold text-shfl-white">
                 Top Song Selection
               </p>
-              <div className="flex-row flex justify-between items-center w-full p-2.5">
-                <input
-                  placeholder="2 (default)"
-                  defaultValue={2}
-                  //value={}
-                  maxLength={2}
-                  type="number"
-                  min={1}
-                  max={15}
-                  className="bg-shfl-gray placeholder-shfl-bg border border-gray-800 text-shfl-pink text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full text-center p-2.5"
-                />
+              <div className="flex-row flex justify-between items-center w-full p-2.5 gap-10">
+                {positions.map((value, index) => (
+                  <input
+                    placeholder={String(value)}
+                    key={index}
+                    defaultValue={index + 1}
+                    onChange={(event) => handlePositions(event, index)}
+                    value={value}
+                    maxLength={2}
+                    type="number"
+                    min={1}
+                    max={15}
+                    className="bg-shfl-gray placeholder-shfl-bg border border-gray-800 text-shfl-pink text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full text-center p-2.5"
+                  />
+                ))}
               </div>
             </div>
             <div className="w-full flex items-center justify-center mb-16">
