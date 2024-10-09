@@ -1,4 +1,5 @@
 import Cross from "@icons/cross.svg";
+import axios from "axios";
 import { useState } from "react";
 
 interface ModalProps {
@@ -14,7 +15,18 @@ const JoinGame = ({ show, setShow }: ModalProps) => {
   };
 
   const submit = () => {
+    if (!pin) return;
     console.log("submit");
+    axios
+      .get("/api/game/join", {
+        params: { id: pin },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   return (
@@ -47,7 +59,10 @@ const JoinGame = ({ show, setShow }: ModalProps) => {
               </p>
             </div>
             <div className="w-full flex items-center justify-center mb-16">
-              <div className="px-10 py-2 my-2 bg-shfl-red text-shfl-white text-lg font-bold rounded-xl shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+              <div
+                onClick={submit}
+                className="px-10 py-2 my-2 bg-shfl-red text-shfl-white text-lg font-bold rounded-xl shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              >
                 {" "}
                 Join
               </div>
