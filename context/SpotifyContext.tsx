@@ -49,7 +49,7 @@ export function SpotifyProvider({ children }: AuthProviderProps) {
   }, [session]);
 
   useEffect(() => {
-    if (!accessToken) return;
+    if (!accessToken || !session) return;
     axios
       .get("/api/spotify/topTracks", {
         params: { term: term },
@@ -61,10 +61,10 @@ export function SpotifyProvider({ children }: AuthProviderProps) {
       .catch((error) => {
         console.error(error);
       });
-  }, [term, accessToken]);
+  }, [term, accessToken, session]);
 
   useEffect(() => {
-    if (!accessToken) return;
+    if (!accessToken || !session) return;
 
     axios
       .get("/api/spotify/topTracks", {
@@ -88,7 +88,7 @@ export function SpotifyProvider({ children }: AuthProviderProps) {
       .catch((error) => {
         console.error(error);
       });
-  }, [accessToken]);
+  }, [accessToken, session]);
 
   useEffect(() => {
     if (!refreshToken || !expiresIn) return;

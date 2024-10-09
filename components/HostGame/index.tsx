@@ -27,7 +27,6 @@ const HostGame = ({ show, setShow }: ModalProps) => {
   const [songAmount, setSongAmount] = useState<number>(2);
   const [selected, setSelected] = useState<Option>(options[0]);
   const [positions, setPositions] = useState<number[]>([1, 2]);
-  console.log(positions);
 
   const handleTerm = (option: Option) => {
     setSelected(option);
