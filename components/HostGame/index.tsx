@@ -7,6 +7,8 @@ import { Game } from "@prisma/client";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AuthContext } from "@/context/AuthContext";
+import { useContext } from "react";
 
 interface ModalProps {
   show: boolean;
@@ -34,6 +36,7 @@ const HostGame = ({ show, setShow }: ModalProps) => {
   const [title, setTitle] = useState<string>("");
 
   const router = useRouter();
+  const authData = useContext(AuthContext);
 
   const handleTerm = (option: Option) => {
     setSelected(option);
@@ -83,10 +86,14 @@ const HostGame = ({ show, setShow }: ModalProps) => {
       title: title,
       sessionId: "",
     };
-    axios.post("/api/game/create", settings).then((res) => {
-      const game: Game = res.data.game;
-      router.push(`/game/${game.sessionId}`); // perhaps use regular id for more security
-    });
+    axios
+      .post("/api/game/create", settings, {
+        headers: { Authorization: authData.email },
+      })
+      .then((res) => {
+        const game: Game = res.data.game;
+        router.push(`/game/${game.sessionId}`); // perhaps use regular id for more security
+      });
   };
 
   return (

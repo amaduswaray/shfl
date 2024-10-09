@@ -27,13 +27,14 @@ model Game {
   sessionId String    @unique
   title     String
   players   User[]    @relation("players")
-  host      User?     @relation("host", fields: [hostId], references: [id])
-  hostId    String?
+  host      User      @relation("host", fields: [hostId], references: [id])
+  hostId    String
   status    Status
   songCount Int         @default(2)
   songPeriod Period
+  songIndexes String    @default("1;2")
 }
-// songIndexes Int[] // This can be handled on the client side
+// Songindexes -1 on client side, or when calling to spotify
 
 
 model User {

@@ -11,6 +11,7 @@ type Role = "player" | "host";
 
 type AuthContextData = {
   name: string;
+  email: string;
   image: string;
   shotsGiven: number;
   gamesPlayed: number;
@@ -62,6 +63,7 @@ export function AuthProvider({ children, session }: AuthProviderProps) {
     <AuthContext.Provider
       value={{
         name: session?.user?.name!,
+        email: session?.user?.email!,
         image: session?.user?.image!,
         shotsGiven: user?.shotsGiven || 0,
         gamesPlayed: user?.gamesPlayed || 0,
