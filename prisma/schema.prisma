@@ -17,16 +17,15 @@ enum Status {
 
 // TODO: Update to spotify values
 enum Period {
-    NEW
-    MID
-    OLD
+    short_term
+    medium_term
+    long_term
 }
 
 model Game {
   id        String    @default(cuid()) @id
   sessionId String    @unique
   title     String
-  published Boolean   @default(false)
   players   User[]    @relation("players")
   host      User?     @relation("host", fields: [hostId], references: [id])
   hostId    String?
