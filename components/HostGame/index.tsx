@@ -1,7 +1,9 @@
+import { GameSettings } from "@/interfaces/game";
 import { Term } from "@/interfaces/spotify";
 import Cross from "@icons/cross.svg";
 import Dropdown from "@icons/dropdown.svg";
 import Dropup from "@icons/dropup.svg";
+import axios from "axios";
 import { useState } from "react";
 
 interface ModalProps {
@@ -27,6 +29,7 @@ const HostGame = ({ show, setShow }: ModalProps) => {
   const [songAmount, setSongAmount] = useState<number>(2);
   const [selected, setSelected] = useState<Option>(options[0]);
   const [positions, setPositions] = useState<number[]>([1, 2]);
+  const [title, setTitle] = useState<string>("");
 
   const handleTerm = (option: Option) => {
     setSelected(option);
@@ -69,7 +72,14 @@ const HostGame = ({ show, setShow }: ModalProps) => {
   };
 
   const submit = () => {
-    console.log("submit");
+    const settings: GameSettings = {
+      songPeriod: selected.value,
+      songCount: songAmount,
+      songIndexes: positions,
+      title: title,
+      sessionId: "",
+    };
+    axios.post("/api/game/create", settings);
   };
 
   return (
@@ -96,6 +106,8 @@ const HostGame = ({ show, setShow }: ModalProps) => {
                   Title
                 </p>
                 <input
+                  value={title}
+                  onChange={(event) => setTitle(event.target.value)}
                   placeholder="Enter Title"
                   className="bg-shfl-gray placeholder-shfl-pink border border-gray-800 text-shfl-red text-sm md:text-md font-semibold rounded-md focus:border-shfl-red block w-full p-2.5"
                 />
@@ -226,7 +238,10 @@ const HostGame = ({ show, setShow }: ModalProps) => {
               </div>
             </div>
             <div className="w-full flex items-center justify-center mb-16">
-              <div className="px-6 py-2 my-2 bg-shfl-red text-shfl-white text-lg font-bold rounded-xl shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300">
+              <div
+                onClick={() => submit()}
+                className="px-6 py-2 my-2 bg-shfl-red text-shfl-white text-lg font-bold rounded-xl shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
+              >
                 {" "}
                 Complete
               </div>

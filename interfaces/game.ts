@@ -1,7 +1,7 @@
 import { Term, Track } from "./spotify";
 export interface GameSettings {
   songPeriod: Term;
-  songCoung: number;
+  songCount: number;
   songIndexes: number[];
   title: string;
   sessionId: string;

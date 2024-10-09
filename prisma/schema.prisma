@@ -47,6 +47,7 @@ model User {
   shotsGiven    Int         @default(0)
   shotsTaken    Int         @default(0)
   playlistId    String?
+  ready         Boolean     @default(false)
   games         Game[]      @relation("players")
   hostedGames   Game[]      @relation("host")
   @@map(name: "users")
