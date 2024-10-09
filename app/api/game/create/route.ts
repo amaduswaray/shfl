@@ -56,6 +56,7 @@ export async function POST(req: Request) {
             songCount: settings.songCount,
             songPeriod: settings.songPeriod,
             hostId: hostUser.id,
+            songIndexes: songIndexes,
           },
         });
 
