@@ -12,7 +12,7 @@ const options: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, account, profile }) {
+    async jwt({ token, account }) {
       if (account) {
         token.access_token = account.access_token;
         token.refreshToken = account.refresh_token;

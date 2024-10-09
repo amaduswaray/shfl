@@ -9,38 +9,47 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-model Post {
-  id        String     @default(cuid()) @id
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User?   @relation(fields: [authorId], references: [id])
-  authorId  String?
+enum Status {
+    LOBBY
+    ONGOING
+    END
 }
 
+// TODO: Update to spotify values
+enum Period {
+    NEW
+    MID
+    OLD
+}
+
+model Game {
+  id        String    @default(cuid()) @id
+  sessionId String    @unique
+  title     String
+  published Boolean   @default(false)
+  players   User[]    @relation("players")
+  host      User?     @relation("host", fields: [hostId], references: [id])
+  hostId    String?
+  status    Status
+  songCount Int         @default(2)
+  songPeriod Period
+}
+// songIndexes Int[] // This can be handled on the client side
+
+
 model User {
-  id            String       @default(cuid()) @id
+  id            String      @default(cuid()) @id
   name          String?
-  email         String?   @unique
-  createdAt     DateTime  @default(now()) @map(name: "created_at")
-  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  spotifyId     String
-  gamesPlayed   Int       @default(0)
-  shotsGiven    Int       @default(0)
-  shotsTaken    Int       @default(0)
-  playlist      String?
-  posts         Post[]
+  email         String?     @unique
+  createdAt     DateTime    @default(now()) @map(name: "created_at")
+  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
+  gamesPlayed   Int         @default(0)
+  shotsGiven    Int         @default(0)
+  shotsTaken    Int         @default(0)
+  playlistId    String?
+  games         Game[]      @relation("players")
+  hostedGames   Game[]      @relation("host")
   @@map(name: "users")
 }
 
 
-// Create:
-// Game: Has users, a host, playlist, sessionId, settings
-// Settings: Song period, Amount of songs, which song index, Title, adult(boolean)
-
-
-
-
-
-// Notes
-// We need a context for each session. Should have who is host, and who is player

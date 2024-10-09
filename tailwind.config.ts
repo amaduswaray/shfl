@@ -8,9 +8,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        sm395: "395px",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "shfl-bg": "#252525",
+        "shfl-red": "#DB0001",
+        "shfl-white": "#FFE8E9",
+        "shfl-pink": "#FFC5C5",
+        "shfl-gray": "#4A4A4A",
+        "shfl-lightgray": "#B1B1B1",
       },
     },
   },

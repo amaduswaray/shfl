@@ -10,7 +10,7 @@ const withPWA = nextPwa({
 });
 
 export default withPWA({
-  reactStrictMode: true,
+  reactStrictMode: false,
   webpack: (config) => {
     config.module.rules.push({
       test: /\.svg$/,
@@ -18,6 +18,31 @@ export default withPWA({
     });
 
     return config;
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "scontent-lhr8-1.xx.fbcdn.net",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "scontent-bru2-1.xx.fbcdn.net",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "scontent-fra3-1.xx.fbcdn.net",
+        pathname: "**",
+      },
+      /* {
+        protocol: "https",
+        hostname: "nabostylisten.s3.amazonaws.com",
+        pathname: "**",
+      }, */
+      // process.env[`S3_BASE_URL_${process.env.APP_ENV}`],
+    ],
   },
   eslint: {
     ignoreDuringBuilds: true,

@@ -28,6 +28,10 @@
       "@styles": ["styles"],
       "@public/*": ["public/*"],
       "@public": ["public"],
+      "@images/*": ["public/images/*"],
+      "@images": ["public/images"],
+      "@icons/*": ["public/icons/*"],
+      "@icons": ["public/icons"],
       "@lib/*": ["lib/*"],
       "@lib": ["lib"]
     }

@@ -1,36 +1,82 @@
 "use client";
 import { AuthContext } from "@/context/AuthContext";
-import { useSession, signIn, signOut } from "next-auth/react";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import Logo from "@images/dashboard_logo.svg";
+import Seperation from "@icons/seperation.svg";
+import dynamic from "next/dynamic";
+const LoginModal = dynamic(() => import("@components/LoginModal"), {
+  ssr: false,
+});
+const Download = dynamic(() => import("@components/Download"), {
+  ssr: false,
+});
 
-// Change to use context, and not the session from next auth
+const Rules = dynamic(() => import("@components/Rules"), {
+  ssr: false,
+});
+
+const Profile = dynamic(() => import("@components/Profile"), {
+  ssr: false,
+});
+
+const HostGame = dynamic(() => import("@components/HostGame"), {
+  ssr: false,
+});
+
+const JoinGame = dynamic(() => import("@components/JoinGame"), {
+  ssr: false,
+});
+
 export default function Home() {
-  const { data: session } = useSession();
-  const { placeholder } = useContext(AuthContext);
-  console.log(placeholder);
+  const [showRules, setShowRules] = useState<boolean>(false);
+  const [showDownload, setShowDownload] = useState<boolean>(false);
+  const [showHost, setShowHost] = useState<boolean>(false);
+  const [showJoin, setShowJoin] = useState<boolean>(false);
+  const { isAuthenticated } = useContext(AuthContext);
+
   return (
-    <div>
-      {session ? (
-        <div className="p-6">
-          <p className="text-black font-normal text-xl mt-5 mb-2">
-            Signed In as
-          </p>
-          <span className="bold-txt">{session?.user?.name}</span>
-          <p
-            className="opacity-70 mt-8 mb-5 underline cursor-pointer"
-            onClick={() => signOut()}
+    <div className="w-full">
+      <div className="w-full p-4 flex flex-col justify-between items-center gap-20 max-h-svh">
+        <Logo />
+        <div className="w-full p-4 flex flex-col justify-between items-center">
+          <div
+            onClick={() => setShowJoin(true)}
+            className="px-6 py-2 my-2 bg-shfl-red text-shfl-white text-lg font-bold rounded-xl shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
           >
-            Sign Out
-          </p>
+            {" "}
+            Join Game
+          </div>
+          <div
+            onClick={() => setShowHost(true)}
+            className="px-6 py-2 my-2 bg-shfl-gray text-shfl-white text-sm font-bold rounded-xl shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
+          >
+            {" "}
+            New Game
+          </div>
         </div>
-      ) : (
-        <button
-          onClick={() => signIn("spotify")}
-          className="shadow-primary w-56 h-16 rounded-xl bg-black border-0 text-white text-3xl active:scale-[0.99] m-6"
-        >
-          Sign In
-        </button>
-      )}
+        <div className="w-full p-4 flex flex-row gap-5 justify-between items-center">
+          <a
+            onClick={() => setShowRules(!showRules)}
+            className="my-2 text-shfl-white text-sm font-bold shadow-sm hover:text-shfl-red cursor-pointer"
+          >
+            How to play
+          </a>
+          <Seperation />
+          <a
+            onClick={() => setShowDownload(!showDownload)}
+            className="my-2 text-shfl-white text-sm font-bold shadow-sm hover:text-shfl-red cursor-pointer"
+          >
+            Download
+          </a>
+        </div>
+      </div>
+      <Rules show={showRules} setShow={setShowRules} />
+      <Download show={showDownload} setShow={setShowDownload} />
+      <HostGame show={showHost} setShow={setShowHost} />
+      <JoinGame show={showJoin} setShow={setShowJoin} />
+      <Profile />
+
+      <LoginModal show={!isAuthenticated} />
     </div>
   );
 }

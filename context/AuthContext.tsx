@@ -1,31 +1,78 @@
 "use client";
-import { ReactNode, createContext } from "react";
-import { SessionProvider, useSession } from "next-auth/react";
-import { Session } from "next-auth";
+import { ReactNode, createContext, useEffect, useState } from "react";
+import { SessionProvider } from "next-auth/react";
+import { DefaultSession } from "next-auth";
+import axios from "axios";
 import { useRouter } from "next/navigation";
+import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
+
+type Role = "player" | "host";
 
 type AuthContextData = {
-  placeholder: string;
-  spotifyId?: string;
+  name: string;
+  image: string;
+  shotsGiven: number;
+  gamesPlayed: number;
+  shotsTaken: number;
+  isAuthenticated: boolean;
+  showProfile: boolean;
+  setShowProfile: (param: boolean) => void;
+  role: Role;
+  setRole: (role: Role) => void;
 };
 
 type AuthProviderProps = {
   children: ReactNode;
-  session: Session | null;
+  session: DefaultSession | null;
 };
 
 export const AuthContext = createContext({} as AuthContextData);
 
-// TODO: Add all other auth variables needed for the context
-// useEffect for fetching data, as well as in game stats
-// Spotify is most played songs
-// In games stats are from the
-
-// If session, register user
-//    Register api checks if user exists, if not we create. if we do, we just return
 export function AuthProvider({ children, session }: AuthProviderProps) {
+  const [user, setUser] = useState<User>();
+  const [role, setRole] = useState<Role>("player");
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [showProfile, setShowProfile] = useState<boolean>(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!session) return;
+
+    axios
+      .post("/api/auth", session.user)
+      .then((res) => {
+        setUser(res.data.user);
+        setIsAuthenticated(true);
+      })
+      .catch((error) => {
+        console.error(error);
+        signOutLocal();
+      });
+  }, []);
+
+  const signOutLocal = () => {
+    signOut();
+    window.localStorage.clear();
+    router.push("/");
+  };
+
   return (
-    <AuthContext.Provider value={{ placeholder: "hello" }}>
+    <AuthContext.Provider
+      value={{
+        name: session?.user?.name!,
+        image: session?.user?.image!,
+        shotsGiven: user?.shotsGiven || 0,
+        gamesPlayed: user?.gamesPlayed || 0,
+        shotsTaken: user?.shotsTaken || 0,
+        isAuthenticated: isAuthenticated,
+        role: role,
+        setRole: setRole,
+        showProfile: showProfile,
+        setShowProfile: setShowProfile,
+      }}
+    >
       <SessionProvider>{children}</SessionProvider>
     </AuthContext.Provider>
   );
