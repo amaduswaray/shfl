@@ -47,9 +47,13 @@ model User {
   shotsTaken    Int         @default(0)
   playlistId    String?
   ready         Boolean     @default(false)
+  gameSongs     String[]    @default([])
   games         Game[]      @relation("players")
   hostedGames   Game[]      @relation("host")
   @@map(name: "users")
 }
+
+
+// For game songs, in the api call, set the current uris to [] before setting it to the fetch tracks
 
 

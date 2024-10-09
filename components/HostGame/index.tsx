@@ -3,8 +3,10 @@ import { Term } from "@/interfaces/spotify";
 import Cross from "@icons/cross.svg";
 import Dropdown from "@icons/dropdown.svg";
 import Dropup from "@icons/dropup.svg";
+import { Game } from "@prisma/client";
 import axios from "axios";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface ModalProps {
   show: boolean;
@@ -30,6 +32,8 @@ const HostGame = ({ show, setShow }: ModalProps) => {
   const [selected, setSelected] = useState<Option>(options[0]);
   const [positions, setPositions] = useState<number[]>([1, 2]);
   const [title, setTitle] = useState<string>("");
+
+  const router = useRouter();
 
   const handleTerm = (option: Option) => {
     setSelected(option);
@@ -79,7 +83,10 @@ const HostGame = ({ show, setShow }: ModalProps) => {
       title: title,
       sessionId: "",
     };
-    axios.post("/api/game/create", settings);
+    axios.post("/api/game/create", settings).then((res) => {
+      const game: Game = res.data.game;
+      router.push(`/game/${game.sessionId}`); // perhaps use regular id for more security
+    });
   };
 
   return (
